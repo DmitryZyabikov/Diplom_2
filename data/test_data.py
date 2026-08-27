@@ -1,6 +1,5 @@
 import random
 import string
-import copy
 
 INGREDIENT_IDS = {
     "bun_1": "61c0c5a71d1f82001bdaaa6d",

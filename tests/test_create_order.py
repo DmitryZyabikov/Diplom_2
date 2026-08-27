@@ -1,7 +1,6 @@
 """Тесты создания заказа."""
 
 import allure
-import pytest
 
 from api.order_api import OrderApi
 from data.test_data import VALID_INGREDIENTS, INVALID_HASH
