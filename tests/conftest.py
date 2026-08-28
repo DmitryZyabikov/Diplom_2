@@ -32,3 +32,23 @@ def registered_user(user_payload):
 
     if access_token:
         user_api.delete_user(access_token)
+
+
+@pytest.fixture
+def created_user(user_payload):
+    """Создаёт пользователя и возвращает его данные вместе с access_token.
+    Удаляет пользователя после теста."""
+    user_api = UserApi()
+    response = user_api.register_user(user_payload)
+    response_json = response.json()
+    access_token = response_json.get("accessToken")
+
+    yield {
+        "email": user_payload["email"],
+        "password": user_payload["password"],
+        "name": user_payload["name"],
+        "access_token": access_token,
+    }
+
+    if access_token:
+        user_api.delete_user(access_token)

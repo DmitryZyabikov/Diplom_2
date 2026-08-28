@@ -24,6 +24,21 @@ class TestCreateOrder:
         assert "order" in response_json
         assert "number" in response_json["order"]
 
+    @allure.story("Создание заказа с ингредиентами")
+    @allure.title("Создание заказа с ингредиентами возвращает 200 и номер заказа")
+    def test_create_order_with_ingredients(self, registered_user):
+        order_api = OrderApi()
+        payload = {"ingredients": VALID_INGREDIENTS}
+        response = order_api.create_order(
+            payload, access_token=registered_user["access_token"]
+        )
+
+        assert response.status_code == 200
+        response_json = response.json()
+        assert response_json["success"] is True
+        assert "order" in response_json
+        assert "number" in response_json["order"]
+
     @allure.story("Создание заказа без авторизации")
     @allure.title("Создание заказа без авторизации возвращает 200")
     def test_create_order_without_auth(self):

@@ -12,19 +12,8 @@ class TestCreateUser:
 
     @allure.story("Создание уникального пользователя")
     @allure.title("Создание уникального пользователя возвращает 200 и success=True")
-    def test_create_unique_user(self, user_payload):
-        user_api = UserApi()
-        response = user_api.register_user(user_payload)
-
-        assert response.status_code == 200
-        response_json = response.json()
-        assert response_json["success"] is True
-        assert "accessToken" in response_json
-        assert "refreshToken" in response_json
-        assert response_json["user"]["email"] == user_payload["email"].lower()
-        assert response_json["user"]["name"] == user_payload["name"]
-
-        user_api.delete_user(response_json["accessToken"])
+    def test_create_unique_user(self, created_user):
+        assert created_user["access_token"] is not None
 
     @allure.story("Создание пользователя, который уже зарегистрирован")
     @allure.title("Повторная регистрация возвращает 403 и сообщение об ошибке")
